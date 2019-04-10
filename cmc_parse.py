@@ -25,6 +25,7 @@ for one_file_name in glob.glob("html_files/*.html"):
 		currency_name = r.find("td", {"class": "currency-name"}).find("a",{"class":"currency-name-container"}).text
 		currency_market_cap = r.find("td", {"class":"market-cap"})['data-sort']
 		currency_price = r.find("a",{"class": "price"}).text
+		currency_supply = r.find("td", {"class": "circulating-supply"}).find("span")['data-supply']
 		currency_volume = r.find("a",{"class": "volume"}).text
 
 		df = df.append({
@@ -33,6 +34,7 @@ for one_file_name in glob.glob("html_files/*.html"):
 			'Name': currency_name,
 			'Market_Cap': currency_market_cap,
 			'Price': currency_price,
+			'Circulating_Supply': currency_supply,
 			'Volume': currency_volume
 			}, ignore_index=True)
 
