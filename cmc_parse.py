@@ -24,8 +24,9 @@ for one_file_name in glob.glob("html_files/*.html"):
 		currency_symbol = r.find("td", {"class": "currency-name"}).find("span",{"class":"currency-symbol"}).find("a").text
 		currency_name = r.find("td", {"class": "currency-name"}).find("a",{"class":"currency-name-container"}).text
 		currency_market_cap = r.find("td", {"class":"market-cap"})['data-sort']
-		currency_price = r.find("a",{"class": "price"}).text
-		currency_volume = r.find("a",{"class": "volume"}).text
+		currency_price = r.find("a",{"class": "price"})['data-usd']
+		currency_supply = r.find("td", {"class": "circulating-supply"}).find("span")['data-supply']
+		currency_volume = r.find("a",{"class": "volume"})['data-usd']
 
 		df = df.append({
 			'Scrapping_Time': scrapping_time, 
@@ -33,7 +34,13 @@ for one_file_name in glob.glob("html_files/*.html"):
 			'Name': currency_name,
 			'Market_Cap': currency_market_cap,
 			'Price': currency_price,
+			'Circulating_Supply': currency_supply,
 			'Volume': currency_volume
 			}, ignore_index=True)
 
 df.to_csv("parsed_results/cmc_dataset.csv")
+
+df = pd.read_csv('parsed_results/cmc_dataset.csv')
+
+df_reorder = df[['Name', 'Symbol', 'Market_Cap', 'Price', 'Circulating_Supply', 'Volume', 'Scrapping_Time']]
+df_reorder.to_csv('parsed_results/cmc_dataset.csv', index=False)
