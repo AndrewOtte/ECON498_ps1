@@ -10,9 +10,9 @@ X = df[['Price' , 'Circulating_Supply' , 'Volume']]
 Y = df[['Market_Cap']]
 
 x = sm.add_constant(X)
-result3= sm.OLS(Y,X).fit()
+result= sm.OLS(Y,X).fit()
 
-print(result3.summary())
+print(result.summary())
 
 
 
@@ -30,5 +30,5 @@ X = [
 ]
 
 results = regression.predict(X)
-print("Market Cap Predctions for BTC, ETH and XRP")
+print("Market Cap Predictions for BTC, ETH and XRP")
 print(results)
